@@ -319,16 +319,10 @@ class _EpubViewState extends State<EpubView> {
 
   static bool _shouldBuildChapterDivider(List<Paragraph> paragraphs, int paragraphIndex) {
     
-    var totalWords = 0;
-    for (int i = 0; i <= paragraphIndex; i++) {
-      totalWords += paragraphs[i].element.text.split(' ').length;
-      print(totalWords);
+    if (paragraphIndex % 4 == 0){
+      return true;
     }
-    
-    if (totalWords < 40){
-      return false;
-    }
-    return true;
+    return false;
   }
 
   static Widget _chapterBuilder(
@@ -352,7 +346,7 @@ class _EpubViewState extends State<EpubView> {
     return Column(
       children: <Widget>[
         if (chapterIndex >= 0 && paragraphIndex == 0)
-        // if (_shouldBuildChapterDivider(paragraphs, paragraphIndex))
+        if (_shouldBuildChapterDivider(paragraphs, paragraphIndex))
           builders.chapterDividerBuilder(chapters[chapterIndex]),
         Html(
           data: paragraphs[index].element.outerHtml,
